@@ -1,7 +1,7 @@
 from fastapi import FastAPI
+from app.routes import router
 
 app = FastAPI()
 
-@app.get("/")
-def home():
-    return {"message": "Hello, FastAPI!"}
+# takes routes in routes.py and add them to this application
+app.include_router(router)
