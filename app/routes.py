@@ -1,5 +1,4 @@
 from fastapi import APIRouter, HTTPException
-
 from app.services import get_all_todos, get_todo, get_user
 
 router = APIRouter()
@@ -11,7 +10,7 @@ def home() -> dict[str, str]:
 
 
 @router.get("/todos")
-def get_todos() -> list[dict]:
+def get_todos():
     return get_all_todos()
 
 
