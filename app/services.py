@@ -3,23 +3,23 @@ import requests
 BASE_URL = "https://jsonplaceholder.typicode.com"
 
 
-def get_all_todos(completed: bool | None = None) -> list[dict]:
+def fetch_json(endpoint: str):
+    response = requests.get(f"{BASE_URL}{endpoint}")
+    return response.json()
+
+
+def get_all_todos(completed: bool | None = None):
     if completed is None:
-        response = requests.get(f"{BASE_URL}/todos")
-    else:
-        response = requests.get(f"{BASE_URL}/todos/completed={str(completed).lower()}")
-    return response.json()
+        return fetch_json("/todos")
+    return fetch_json(f"/todos?completed={str(completed).lower()}")
 
 
-# todo_id is passed from routes.py through routes
-def get_todo(todo_id: int) -> list[dict]:
-    response = requests.get(f"{BASE_URL}/todos/{todo_id}")
-    return response.json()
+def get_todo(todo_id: int):
+    return fetch_json(f"/todos/{todo_id}")
 
 
 def get_user(user_id: int):
-    response = requests.get(f"{BASE_URL}/users/{user_id}/todos")
-    return response.json()
+    return fetch_json(f"/users/{user_id}/todos")
 
 
 # requests let us make HTTP requests
