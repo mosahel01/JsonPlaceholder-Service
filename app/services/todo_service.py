@@ -4,7 +4,11 @@ BASE_URL = "https://jsonplaceholder.typicode.com"
 
 
 def fetch_json(endpoint: str):
-    response = requests.get(f"{BASE_URL}{endpoint}", timeout=5)
+    response = requests.get(
+        f"{BASE_URL}{endpoint}",
+        timeout=5
+    )
+    response.raise_for_status() # avoids ignoring HTTP errors
     return response.json()
 
 
@@ -26,3 +30,7 @@ def fetch_user_todos(user_id: int):
 # talks to jsonplaceholder
 # handles API requests
 # returns python data to the routes
+
+# since service layer is making requests
+# it should handle HTTP errors with response.raise_for_status()
+# it also sets timeouts if the server won't respond.
