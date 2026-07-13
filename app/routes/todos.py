@@ -4,6 +4,11 @@ from app.schemas.todo import Todo
 from app.services.todo_service import fetch_todo_by_id, fetch_todos, fetch_user_todos
 
 router = APIRouter()
+"""
+`APIRouter` class, used to group *path operations*, for example to structure
+an app in multiple files. It would then be included in the `FastAPI` app, or
+in another `APIRouter` (ultimately included in the app).
+"""
 
 
 @router.get("/", response_model=Todo)
