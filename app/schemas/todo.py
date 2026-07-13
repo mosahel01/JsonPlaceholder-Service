@@ -9,7 +9,7 @@ class Todo(BaseModel):
 
 
 # pydantic model = schema
-# pydantic validates outgoing data from routes
-# before fastapi converts it to JSON
+# pydantic validates/filters outgoing data
+# from routes before fastapi converts it to JSON
 
 # Services -> Route -> [Pydantic] -> FastAPI -> Client
