@@ -1,14 +1,10 @@
 import requests
 
-BASE_URL = "https://jsonplaceholder.typicode.com"
-
+from app.config import BASE_URL, REQUEST_TIMEOUT
 
 def fetch_json(endpoint: str):
-    response = requests.get(
-        f"{BASE_URL}{endpoint}",
-        timeout=5
-    )
-    response.raise_for_status() # avoids ignoring HTTP errors
+    response = requests.get(f"{BASE_URL}{endpoint}", timeout=REQUEST_TIMEOUT)
+    response.raise_for_status()  # avoids ignoring HTTP errors
     return response.json()
 
 
