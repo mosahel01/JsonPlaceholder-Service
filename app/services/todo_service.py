@@ -17,7 +17,6 @@ def fetch_todos(completed: bool | None = None):
 def fetch_todo_by_id(todo_id: int):
     return fetch_json(f"/todos/{todo_id}")
 
-
 def fetch_user_todos(user_id: int):
     return fetch_json(f"/users/{user_id}/todos")
 
