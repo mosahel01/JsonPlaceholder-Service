@@ -2,6 +2,7 @@ import requests
 
 from app.config import BASE_URL, REQUEST_TIMEOUT
 
+
 def fetch_json(endpoint: str):
     response = requests.get(f"{BASE_URL}{endpoint}", timeout=REQUEST_TIMEOUT)
     response.raise_for_status()  # avoids ignoring HTTP errors
@@ -16,6 +17,7 @@ def fetch_todos(completed: bool | None = None):
 
 def fetch_todo_by_id(todo_id: int):
     return fetch_json(f"/todos/{todo_id}")
+
 
 def fetch_user_todos(user_id: int):
     return fetch_json(f"/users/{user_id}/todos")
