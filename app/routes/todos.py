@@ -1,19 +1,19 @@
 from fastapi import APIRouter, HTTPException
 
 from app.schemas.todo import Todo
-from app.services.todo_service import fetch_todo_by_id, fetch_todos, fetch_user_todos
+from app.services.todo_service import fetch_todos, fetch_user_todos
 
 router = APIRouter()
 """
-`APIRouter` class, used to group *path operations*, for example to structure
+APIRouter class, used to group *path operations*, for example to structure
 an app in multiple files. It would then be included in the `FastAPI` app, or
-in another `APIRouter` (ultimately included in the app).
+in another APIRouter (ultimately included in the app).
 """
 
 
-@router.get("/", response_model=Todo)
-def root() -> dict[str, str]:
-    return {"message": "Hello, FastAPI!"}
+# @router.get("/", response_model=Todo)
+# def root() -> dict[str, str]:
+#     return {"message": "Hello, FastAPI!"}
 
 
 @router.get("/todos", response_model=Todo, status_code=201)
@@ -31,7 +31,7 @@ def read_todo(todo_id: int):
 
 @router.get("/users/{user_id}/todos", response_model=Todo)
 def list_user_todos(user_id: int):
-    return fetch_todo_by_id(user_id)
+    return fetch_user_todos(user_id)
 
 
 # define HTTP endpoints (/todos, /todos/{id})
