@@ -1,7 +1,12 @@
 from fastapi import APIRouter, HTTPException
 
 from app.schemas.todo import Todo
-from app.services.todo_service import fetch_todos, fetch_user_todos
+from app.services.todo_service import (
+        fetch_todo_by_id,
+        fetch_todos,
+        fetch_user_by_id,
+        fetch_user_todos,
+)
 
 router = APIRouter()
 """
@@ -11,28 +16,31 @@ in another APIRouter (ultimately included in the app).
 """
 
 
-# @router.get("/", response_model=Todo)
-# def root() -> dict[str, str]:
-#     return {"message": "Hello, FastAPI!"}
+@router.get("/")
+def root() -> dict[str, str]:
+    return {"message": "Hello, FastAPI!"}
 
 
-@router.get("/todos", response_model=Todo, status_code=201)
+@router.get("/todos", response_model=list[Todo], status_code=201)
 def list_todos():
     return fetch_todos()
 
 
 @router.get("/todos/{todo_id}", response_model=Todo)
 def read_todo(todo_id: int):
-    todo = fetch_user_todos(todo_id)
+    todo = fetch_todo_by_id(todo_id)
     if not todo:
         raise HTTPException(status_code=404, detail="Todo not found.")
     return todo
 
 
-@router.get("/users/{user_id}/todos", response_model=Todo)
+@router.get("/users/{user_id}/todos", response_model=list[Todo])
 def list_user_todos(user_id: int):
     return fetch_user_todos(user_id)
 
+@router.get("/users/{user_id}")
+def list_user(user_id: int):
+    return  fetch_user_by_id(user_id)
 
 # define HTTP endpoints (/todos, /todos/{id})
 # calls service functions
