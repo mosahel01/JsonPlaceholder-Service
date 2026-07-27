@@ -23,6 +23,10 @@ def fetch_user_todos(user_id: int):
     return fetch_json(f"/users/{user_id}/todos")
 
 
+def fetch_user_by_id(user_id: int):
+    return fetch_json(f"/users/{user_id}")
+
+
 # business logic here
 # talks to jsonplaceholder
 # handles API requests
