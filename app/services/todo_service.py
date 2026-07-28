@@ -29,17 +29,47 @@ def fetch_user_by_id(user_id: int):
 
 
 # POST service
-def create_todo_service(todo: TodoCreate):
+def create_todo_service(todo: Todo):
     # requests converts the dict to json
+    # response is the python object representing entire HTTP Response
+    # status_code, headers, text, json() etc
     response = requests.post(
         f"{BASE_URL}/todos",
-        json=todo.model_dump(),  # convert model to dict
+        json=todo.model_dump(),  # converts TodoCreate object to python dictionary
         timeout=REQUEST_TIMEOUT,
     )
     response.raise_for_status()
 
-    # parse json response into python dict/list from requests.post()
+    # Please take the JSON body from that HTTP response and convert it into python dict
+    # FastAPI will convert this python dict into JSON later after
+    # going through routes and pydantic.
+    return response.json()  # extracts JSON out of Requests Response
+
+
+# PUT service
+def update_todo_service(todo_id: int, todo: TodoCreate):
+    response = requests.put(
+        f"{BASE_URL}/todos/{todo_id}",
+        json=todo.model_dump(),
+        timeout=REQUEST_TIMEOUT,
+    )
+
+    response.raise_for_status()
+
     return response.json()
+
+
+def update_todo_service_partial(todo_id: int, todo: TodoUpdate):
+    response = requests.patch(
+        f"{BASE_URL}/todos/{todo_id}",
+        json=todo.model_dump(),
+        timeout=REQUEST_TIMEOUT,
+    )
+
+    response.raise_for_status()
+
+    return response.json()
+
 
 # service layer
 # handles api requests
