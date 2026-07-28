@@ -14,6 +14,12 @@ class TodoCreate(BaseModel):
     completed: bool
 
 
+class TodoUpdate(BaseModel):
+    userId: int | None = None
+    title: str | None = None
+    completed: bool | None = None  # None = None makes every field optional(for PATCH)
+
+
 # No ID as server is responsible for creating IDs
 # pydantic model = schema
 # pydantic validates/filters outgoing data
