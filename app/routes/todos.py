@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 
-from app.schemas.todo import Todo, TodoCreate
+from app.schemas.todo import Todo, TodoCreate, TodoUpdate
 from app.schemas.user import User
 from app.services.todo_service import (
     fetch_todo_by_id,
@@ -8,6 +8,8 @@ from app.services.todo_service import (
     fetch_user_by_id,
     fetch_user_todos,
     create_todo_service,
+    update_todo_service,
+    update_todo_service_partial,
 )
 
 router = APIRouter()
@@ -50,9 +52,19 @@ def list_user(user_id: int):
     "/todos",
     response_model=Todo,
     status_code=201,
-    )
+)
 def create_todo(todo: TodoCreate):
     return create_todo_service(todo)
+
+
+@router.put("/todos/{todo_id}")
+def update_todo(todo_id: int, todo: TodoCreate):
+    return update_todo_service(todo_id, todo)
+
+
+@router.patch("/todos/{todo_id}")
+def update_todo_partial(todo_id: int, todo: TodoUpdate):
+    return update_todo_service_partial(todo_id, todo)
 
 
 # define HTTP endpoints (/todos, /todos/{id})
