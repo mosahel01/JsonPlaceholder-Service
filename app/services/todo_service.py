@@ -3,10 +3,10 @@ import requests
 from app.config import BASE_URL, REQUEST_TIMEOUT
 
 
-# GET Service
+# GET service
 def fetch_service(endpoint: str):
     response = requests.get(f"{BASE_URL}{endpoint}", timeout=REQUEST_TIMEOUT)
-    response.raise_for_status()  # avoids ignoring HTTP errors
+    response.raise_for_status()  # raise on http errors
     return response.json()
 
 
@@ -28,28 +28,19 @@ def fetch_user_by_id(user_id: int):
     return fetch_service(f"/users/{user_id}")
 
 
-# # POST Service
-# def create_service(endpoint: str):
-#     response = requests.post(f"{BASE_URL}/todos", json={endpoint}.model_dump())
-#     return response.json()
-
-# def create_todo_service(todo: TodoCreate):
-#     return create_service(todo)
-
+# POST service
 def create_todo_service(todo: TodoCreate):
+    # requests converts the dict to json
     response = requests.post(
-        f"{BASE_URL}/todos", 
-        json=todo.model_dump()
+        f"{BASE_URL}/todos",
+        json=todo.model_dump(),  # convert model to dict
+        timeout=REQUEST_TIMEOUT,
     )
+    response.raise_for_status()
 
+    # parse json response into python dict/list from requests.post()
     return response.json()
 
-
-# business logic here
-# talks to jsonplaceholder
-# handles API requests
-# returns python data to the routes
-
-# since service layer is making requests
-# it should handle HTTP errors with response.raise_for_status()
-# it also sets timeouts if the server won't respond.
+# service layer
+# handles api requests
+# returns python data

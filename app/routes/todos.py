@@ -7,7 +7,6 @@ from app.services.todo_service import (
     fetch_todos,
     fetch_user_by_id,
     fetch_user_todos,
-
     create_todo_service,
 )
 
@@ -47,9 +46,12 @@ def list_user(user_id: int):
     return fetch_user_by_id(user_id)
 
 
-@router.post("/todos")
+@router.post(
+    "/todos",
+    response_model=Todo,
+    status_code=201,
+    )
 def create_todo(todo: TodoCreate):
-    print(type(todo))
     return create_todo_service(todo)
 
 
