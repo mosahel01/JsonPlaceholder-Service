@@ -69,7 +69,7 @@ def update_todo_partial(todo_id: int, todo: TodoUpdate):
 
 
 @router.delete("/todos/{todo_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_todo(todo_id : int):
+def delete_todo(todo_id: int):
     delete_todo_service(todo_id)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
