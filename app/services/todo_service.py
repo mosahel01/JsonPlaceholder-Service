@@ -71,6 +71,16 @@ def update_todo_service_partial(todo_id: int, todo: TodoUpdate):
     return response.json()
 
 
+def delete_todo_service(todo_id: int):
+    response = requests.delete(
+        f"{BASE_URL}/todos/{todo_id}",
+        timeout=REQUEST_TIMEOUT,
+    )
+
+    response.raise_for_status()
+    
+
+
 # service layer
 # handles api requests
 # returns python data
