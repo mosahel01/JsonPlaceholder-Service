@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Response, status
 
 from app.schemas.todo import Todo, TodoCreate, TodoUpdate
 from app.schemas.user import User
@@ -10,6 +10,7 @@ from app.services.todo_service import (
     create_todo_service,
     update_todo_service,
     update_todo_service_partial,
+    delete_todo_service,
 )
 
 router = APIRouter()
@@ -25,7 +26,7 @@ def root() -> dict[str, str]:
     return {"message": "Hello, FastAPI!"}
 
 
-@router.get("/todos", response_model=list[Todo], status_code=201)
+@router.get("/todos", response_model=list[Todo], status_code=200)
 def list_todos():
     return fetch_todos()
 
@@ -65,6 +66,12 @@ def update_todo(todo_id: int, todo: TodoCreate):
 @router.patch("/todos/{todo_id}")
 def update_todo_partial(todo_id: int, todo: TodoUpdate):
     return update_todo_service_partial(todo_id, todo)
+
+
+@router.delete("/todos/{todo_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_todo(todo_id : int):
+    delete_todo_service(todo_id)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 # define HTTP endpoints (/todos, /todos/{id})
