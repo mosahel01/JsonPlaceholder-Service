@@ -78,7 +78,6 @@ def delete_todo_service(todo_id: int):
     )
 
     response.raise_for_status()
-    
 
 
 # service layer
