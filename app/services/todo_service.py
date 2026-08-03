@@ -1,6 +1,7 @@
 import requests
 
 from app.config import BASE_URL, REQUEST_TIMEOUT
+from app.schemas.todo import Todo, TodoCreate, TodoUpdate
 
 
 # GET service
