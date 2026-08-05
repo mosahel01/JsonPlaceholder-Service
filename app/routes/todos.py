@@ -3,14 +3,14 @@ from fastapi import APIRouter, HTTPException, Response, status
 from app.schemas.todo import Todo, TodoCreate, TodoUpdate
 from app.schemas.user import User
 from app.services.todo_service import (
+    create_todo_service,
+    delete_todo_service,
     fetch_todo_by_id,
     fetch_todos,
     fetch_user_by_id,
     fetch_user_todos,
-    create_todo_service,
     update_todo_service,
     update_todo_service_partial,
-    delete_todo_service,
 )
 
 router = APIRouter()
